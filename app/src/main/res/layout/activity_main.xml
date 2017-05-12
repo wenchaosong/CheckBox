@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <com.checkbox.CheckBoxGroupView
+        android:id="@+id/checkTextGroupView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="8dp"
+        android:paddingLeft="8dp"
+        android:paddingRight="8dp"
+        app:checkModel="SIMPLE"
+        app:checkedStrokeColor="@color/colorPrimary"
+        app:checkedTextColor="#009EF2"
+        app:lineHeight="16dp"
+        app:strokeModel="FILL_FILL"
+        app:strokeWidth="1px"
+        app:tagRadius="5dp"
+        app:textGapWidth="8dp"
+        app:textPaddingButtom="8dp"
+        app:textPaddingLeft="12dp"
+        app:textPaddingRight="12dp"
+        app:textPaddingTop="8dp"
+        app:textSize="14sp"
+        app:unCheckedStrokeColor="@color/colorAccent"
+        app:unCheckedTextColor="#66000000" />
+
+</LinearLayout>
