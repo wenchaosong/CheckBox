@@ -14,14 +14,14 @@
 
 
 代码和效果说明：mainActivity  
-	CheckBoxGroupView checkTextGroupView;
+	CheckBoxGroupView checkBoxGroupView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        checkTextGroupView= (CheckBoxGroupView) findViewById(R.id.checkTextGroupView);
-        checkTextGroupView.updateCheckTexts(initList());
+        checkBoxGroupView= (CheckBoxGroupView) findViewById(R.id.checkBoxGroupView);
+        checkBoxGroupView.updateCheckTexts(initList());
     }
 
     public List<CheckBoxGroupView.CheckText> initList(){
@@ -40,7 +40,7 @@
 #### 无边框单选模式(多选修改*app:checkModel="MULTI"*) 
 
 	<com.checkbox.CheckBoxGroupView
-        android:id="@+id/checkTextGroupView"
+        android:id="@+id/checkBoxGroupView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:checkedTextColor="#009EF2"
@@ -57,12 +57,12 @@
         app:unCheckedTextColor="@color/black_overlay" />
 
 
-![image](https://github.com/igeek-YZ/TextCheckGroupView/blob/master/gifs/simple_gone.gif )  
+![image](/gifs/simple_gone.gif )  
 
 #### 选中边框单选模式(多选修改*app:checkModel="MULTI"*)  
 
-	<com.igeek.textcheckgroupview.CheckBoxGroupView
-        android:id="@+id/checkTextGroupView"
+	<com.checkbox.CheckBoxGroupView
+        android:id="@+id/checkBoxGroupView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:checkedStrokeColor="@color/colorPrimary"
@@ -80,15 +80,15 @@
         app:unCheckedStrokeColor="@color/gray_efeff4"
         app:unCheckedTextColor="@color/black_overlay" />
 
-![image](https://github.com/igeek-YZ/TextCheckGroupView/blob/master/gifs/simple_gone_Stroke.gif )  
+![image](/gifs/simple_gone_Stroke.gif )  
 
 #### 选中边框多选模式
-![image](https://github.com/igeek-YZ/TextCheckGroupView/blob/master/gifs/mulit_gone_Stroke.gif )
+![image](/gifs/mulit_gone_Stroke.gif )
 
 #### 选中边框带图标单选模式(多选修改*app:checkModel="MULTI"*) 
 
-	<com.igeek.textcheckgroupview.CheckBoxGroupView
-        android:id="@+id/checkTextGroupView"
+	<com.checkbox.CheckBoxGroupView
+        android:id="@+id/checkBoxGroupView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:checkedStrokeColor="@color/colorPrimary"
@@ -112,7 +112,7 @@
         app:unCheckedTextColor="@color/black_overlay" />
 
 
-![image](https://github.com/igeek-YZ/TextCheckGroupView/blob/master/gifs/simple_icon_gone_Stroke.gif )  
+![image](/gifs/simple_icon_gone_Stroke.gif )  
 
 #### 属性说明
 	<declare-styleable name="CheckBoxGroupView">
