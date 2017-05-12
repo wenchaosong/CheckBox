@@ -12,6 +12,20 @@
 
 `class CheckBoxGroupView extends View`  
 
+## 使用
+
+- Step 1. 把 JitPack repository 添加到build.gradle文件中 repositories的末尾:
+```
+repositories {
+    maven { url "https://jitpack.io" }
+}
+```
+- Step 2. 在你的app build.gradle 的 dependencies 中添加依赖
+```
+dependencies {
+	compile 'com.github.wenchaosong:checkbox:1.0.0'
+}
+```
 
 代码和效果说明：mainActivity  
 	CheckBoxGroupView checkBoxGroupView;
