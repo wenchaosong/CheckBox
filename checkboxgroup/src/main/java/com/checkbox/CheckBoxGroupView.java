@@ -117,12 +117,12 @@ public class CheckBoxGroupView extends View implements View.OnTouchListener {
 
         TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.CheckBoxGroupView);
 
-        textPadding = ta.getDimensionPixelSize(R.styleable.CheckBoxGroupView_textPadding, 0);
+        textPadding = ta.getDimensionPixelSize(R.styleable.CheckBoxGroupView_cb_textPadding, 0);
 
-        textPaddingLeft = ta.getDimensionPixelSize(R.styleable.CheckBoxGroupView_textPaddingLeft, -1);
-        textPaddingTop = ta.getDimensionPixelSize(R.styleable.CheckBoxGroupView_textPaddingTop, -1);
-        textPaddingRight = ta.getDimensionPixelSize(R.styleable.CheckBoxGroupView_textPaddingRight, -1);
-        textPaddingButtom = ta.getDimensionPixelSize(R.styleable.CheckBoxGroupView_textPaddingButtom, -1);
+        textPaddingLeft = ta.getDimensionPixelSize(R.styleable.CheckBoxGroupView_cb_textPaddingLeft, -1);
+        textPaddingTop = ta.getDimensionPixelSize(R.styleable.CheckBoxGroupView_cb_textPaddingTop, -1);
+        textPaddingRight = ta.getDimensionPixelSize(R.styleable.CheckBoxGroupView_cb_textPaddingRight, -1);
+        textPaddingButtom = ta.getDimensionPixelSize(R.styleable.CheckBoxGroupView_cb_textPaddingButtom, -1);
 
         if (textPaddingLeft == -1) {
             textPaddingLeft = textPadding;
@@ -140,22 +140,22 @@ public class CheckBoxGroupView extends View implements View.OnTouchListener {
             textPaddingButtom = textPadding;
         }
 
-        textSize = ta.getDimensionPixelSize(R.styleable.CheckBoxGroupView_textSize, 14);
-        tagRadius = ta.getDimensionPixelSize(R.styleable.CheckBoxGroupView_tagRadius, 5);
-        textGapWidth = ta.getDimensionPixelSize(R.styleable.CheckBoxGroupView_textGapWidth, 0);
-        lineHeight = ta.getDimensionPixelSize(R.styleable.CheckBoxGroupView_lineHeight, 0);
-        strokeWidth = ta.getDimensionPixelSize(R.styleable.CheckBoxGroupView_strokeWidth, 0);
-        drawableWidth = ta.getDimensionPixelOffset(R.styleable.CheckBoxGroupView_drawableWidth, 0);
-        drawableHeight = ta.getDimensionPixelOffset(R.styleable.CheckBoxGroupView_drawableHeight, 0);
-        drawTextGapWidth = ta.getDimensionPixelOffset(R.styleable.CheckBoxGroupView_drawTextGapWidth, 0);
-        checkedTextColor = ta.getColor(R.styleable.CheckBoxGroupView_checkedTextColor, Color.GREEN);
-        unCheckedTextColor = ta.getColor(R.styleable.CheckBoxGroupView_unCheckedTextColor, Color.GRAY);
-        checkedStrokeColor = ta.getColor(R.styleable.CheckBoxGroupView_checkedStrokeColor, Color.RED);
-        unCheckedStrokeColor = ta.getColor(R.styleable.CheckBoxGroupView_unCheckedStrokeColor, Color.GRAY);
-        checkModel = ta.getInt(R.styleable.CheckBoxGroupView_checkModel, SIMPLE);
-        strokeModel = ta.getInt(R.styleable.CheckBoxGroupView_strokeModel, GONE);
-        checkedDrawable = ta.getDrawable(R.styleable.CheckBoxGroupView_checkedDrawable);
-        unCheckedDrawable = ta.getDrawable(R.styleable.CheckBoxGroupView_unCheckedDrawable);
+        textSize = ta.getDimensionPixelSize(R.styleable.CheckBoxGroupView_cb_textSize, 14);
+        tagRadius = ta.getDimensionPixelSize(R.styleable.CheckBoxGroupView_cb_tagRadius, 5);
+        textGapWidth = ta.getDimensionPixelSize(R.styleable.CheckBoxGroupView_cb_textGapWidth, 0);
+        lineHeight = ta.getDimensionPixelSize(R.styleable.CheckBoxGroupView_cb_lineHeight, 0);
+        strokeWidth = ta.getDimensionPixelSize(R.styleable.CheckBoxGroupView_cb_strokeWidth, 0);
+        drawableWidth = ta.getDimensionPixelOffset(R.styleable.CheckBoxGroupView_cb_drawableWidth, 0);
+        drawableHeight = ta.getDimensionPixelOffset(R.styleable.CheckBoxGroupView_cb_drawableHeight, 0);
+        drawTextGapWidth = ta.getDimensionPixelOffset(R.styleable.CheckBoxGroupView_cb_drawTextGapWidth, 0);
+        checkedTextColor = ta.getColor(R.styleable.CheckBoxGroupView_cb_checkedTextColor, Color.GREEN);
+        unCheckedTextColor = ta.getColor(R.styleable.CheckBoxGroupView_cb_unCheckedTextColor, Color.GRAY);
+        checkedStrokeColor = ta.getColor(R.styleable.CheckBoxGroupView_cb_checkedStrokeColor, Color.RED);
+        unCheckedStrokeColor = ta.getColor(R.styleable.CheckBoxGroupView_cb_unCheckedStrokeColor, Color.GRAY);
+        checkModel = ta.getInt(R.styleable.CheckBoxGroupView_cb_checkModel, SIMPLE);
+        strokeModel = ta.getInt(R.styleable.CheckBoxGroupView_cb_strokeModel, GONE);
+        checkedDrawable = ta.getDrawable(R.styleable.CheckBoxGroupView_cb_checkedDrawable);
+        unCheckedDrawable = ta.getDrawable(R.styleable.CheckBoxGroupView_cb_unCheckedDrawable);
 
         textPaint = new Paint();
         textPaint.setAntiAlias(true);
