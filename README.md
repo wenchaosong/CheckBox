@@ -23,7 +23,7 @@ repositories {
 - Step 2. 在你的app build.gradle 的 dependencies 中添加依赖
 ```
 dependencies {
-	compile 'com.github.wenchaosong:checkbox:1.0.0'
+	compile 'com.github.wenchaosong:checkbox:1.0.1'
 }
 ```
 
@@ -57,18 +57,18 @@ dependencies {
         android:id="@+id/checkBoxGroupView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:checkedTextColor="#009EF2"
-        app:textPaddingLeft="16dp"
-        app:textPaddingRight="16dp"
-        app:textPaddingButtom="12dp"
-        app:textPaddingTop="12dp"
-        app:lineHeight="12dp"
-        app:strokeModel="GONE"
-        app:checkModel="SIMPLE"
-        app:strokeWidth="1px"
-        app:textGapWidth="10dp"
-        app:textSize="16sp"
-        app:unCheckedTextColor="@color/black_overlay" />
+        app:cb_checkedTextColor="#009EF2"
+        app:cb_textPaddingLeft="16dp"
+        app:cb_textPaddingRight="16dp"
+        app:cb_textPaddingButtom="12dp"
+        app:cb_textPaddingTop="12dp"
+        app:cb_lineHeight="12dp"
+        app:cb_strokeModel="GONE"
+        app:cb_checkModel="SIMPLE"
+        app:cb_strokeWidth="1px"
+        app:cb_textGapWidth="10dp"
+        app:cb_textSize="16sp"
+        app:cb_unCheckedTextColor="@color/black_overlay" />
 
 
 ![image](/gifs/simple_gone.gif )  
@@ -79,20 +79,20 @@ dependencies {
         android:id="@+id/checkBoxGroupView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:checkedStrokeColor="@color/colorPrimary"
-        app:checkedTextColor="#009EF2"
-        app:textPaddingLeft="16dp"
-        app:textPaddingRight="16dp"
-        app:textPaddingButtom="12dp"
-        app:textPaddingTop="12dp"
-        app:lineHeight="12dp"
-        app:strokeModel="GONE_STROKE"
-        app:checkModel="SIMPLE"
-        app:strokeWidth="1px"
-        app:textGapWidth="10dp"
-        app:textSize="16sp"
-        app:unCheckedStrokeColor="@color/gray_efeff4"
-        app:unCheckedTextColor="@color/black_overlay" />
+        app:cb_checkedStrokeColor="@color/colorPrimary"
+        app:cb_checkedTextColor="#009EF2"
+        app:cb_textPaddingLeft="16dp"
+        app:cb_textPaddingRight="16dp"
+        app:cb_textPaddingButtom="12dp"
+        app:cb_textPaddingTop="12dp"
+        app:cb_lineHeight="12dp"
+        app:cb_strokeModel="GONE_STROKE"
+        app:cb_checkModel="SIMPLE"
+        app:cb_strokeWidth="1px"
+        app:cb_textGapWidth="10dp"
+        app:cb_textSize="16sp"
+        app:cb_unCheckedStrokeColor="@color/gray_efeff4"
+        app:cb_unCheckedTextColor="@color/black_overlay" />
 
 ![image](/gifs/simple_gone_Stroke.gif )  
 
@@ -105,25 +105,25 @@ dependencies {
         android:id="@+id/checkBoxGroupView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:checkedStrokeColor="@color/colorPrimary"
-        app:checkedTextColor="#009EF2"
-        app:textPaddingLeft="16dp"
-        app:textPaddingRight="16dp"
-        app:textPaddingButtom="12dp"
-        app:textPaddingTop="12dp"
-        app:lineHeight="12dp"
-        app:strokeModel="GONE_STROKE"
-        app:checkModel="SIMPLE"
-        app:strokeWidth="1px"
-        app:textGapWidth="10dp"
-        app:textSize="16sp"
-        app:drawTextGapWidth="8dp"
-        app:drawableWidth="20dp"
-        app:drawableHeight="20dp"
-        app:unCheckedDrawable="@mipmap/ic_radio_btn_unchecked_black_24dp"
-        app:checkedDrawable="@mipmap/ic_radio_btn_checked_black_24dp"
-        app:unCheckedStrokeColor="@color/gray_efeff4"
-        app:unCheckedTextColor="@color/black_overlay" />
+        app:cb_checkedStrokeColor="@color/colorPrimary"
+        app:cb_checkedTextColor="#009EF2"
+        app:cb_textPaddingLeft="16dp"
+        app:cb_textPaddingRight="16dp"
+        app:cb_textPaddingButtom="12dp"
+        app:cb_textPaddingTop="12dp"
+        app:cb_lineHeight="12dp"
+        app:cb_strokeModel="GONE_STROKE"
+        app:cb_checkModel="SIMPLE"
+        app:cb_strokeWidth="1px"
+        app:cb_textGapWidth="10dp"
+        app:cb_textSize="16sp"
+        app:cb_drawTextGapWidth="8dp"
+        app:cb_drawableWidth="20dp"
+        app:cb_drawableHeight="20dp"
+        app:cb_unCheckedDrawable="@mipmap/ic_radio_btn_unchecked_black_24dp"
+        app:cb_checkedDrawable="@mipmap/ic_radio_btn_checked_black_24dp"
+        app:cb_unCheckedStrokeColor="@color/gray_efeff4"
+        app:cb_unCheckedTextColor="@color/black_overlay" />
 
 
 ![image](/gifs/simple_icon_gone_Stroke.gif )  
@@ -131,49 +131,49 @@ dependencies {
 #### 属性说明
 	<declare-styleable name="CheckBoxGroupView">
         <!--文本字体大小-->
-        <attr name="textSize" format="dimension|reference"/>
+        <attr name="cb_textSize" format="dimension|reference"/>
         <!-- 文本距离边框的填充间距 -->
-        <attr name="textPadding" format="dimension|reference"/>
+        <attr name="cb_textPadding" format="dimension|reference"/>
         <!-- 文本距离边框的左填充间距 -->
-        <attr name="textPaddingLeft" format="dimension|reference"/>
+        <attr name="cb_textPaddingLeft" format="dimension|reference"/>
         <!-- 文本距离边框的上填充间距 -->
-        <attr name="textPaddingTop" format="dimension|reference"/>
+        <attr name="cb_textPaddingTop" format="dimension|reference"/>
         <!-- 文本距离边框的右填充间距 -->
-        <attr name="textPaddingRight" format="dimension|reference"/>
+        <attr name="cb_textPaddingRight" format="dimension|reference"/>
         <!-- 文本距离边框的底部填充间距 -->
-        <attr name="textPaddingButtom" format="dimension|reference"/>
+        <attr name="cb_textPaddingButtom" format="dimension|reference"/>
         <!-- 文本之间的间隔距离 -->
-        <attr name="textGapWidth" format="dimension|reference"/>
+        <attr name="cb_textGapWidth" format="dimension|reference"/>
         <!-- 换行的行高间距 -->
-        <attr name="lineHeight" format="dimension|reference"/>
+        <attr name="cb_lineHeight" format="dimension|reference"/>
         <!-- 选中状态的颜色 -->
-        <attr name="checkedTextColor" format="color|reference"/>
+        <attr name="cb_checkedTextColor" format="color|reference"/>
         <!-- 未选中状态的颜色(默认) -->
-        <attr name="unCheckedTextColor" format="color|reference"/>
+        <attr name="cb_unCheckedTextColor" format="color|reference"/>
         <!-- 选中边框颜色 -->
-        <attr name="checkedStrokeColor" format="color|reference"/>
+        <attr name="cb_checkedStrokeColor" format="color|reference"/>
         <!-- 未选中边框颜色(默认) -->
-        <attr name="unCheckedStrokeColor" format="color|reference"/>
+        <attr name="cb_unCheckedStrokeColor" format="color|reference"/>
         <!-- 边框宽度 -->
-        <attr name="strokeWidth" format="dimension|reference"/>
+        <attr name="cb_strokeWidth" format="dimension|reference"/>
         <!-- 选中的图标 -->
-        <attr name="checkedDrawable" format="reference|color"/>
+        <attr name="cb_checkedDrawable" format="reference|color"/>
         <!-- 默认的图标 -->
-        <attr name="unCheckedDrawable" format="reference|color"/>
+        <attr name="cb_unCheckedDrawable" format="reference|color"/>
         <!-- 图标的宽度 -->
-        <attr name="drawTextGapWidth" format="reference|dimension"/>
+        <attr name="cb_drawTextGapWidth" format="reference|dimension"/>
         <!-- 图标的高度 -->
-        <attr name="drawableHeight" format="reference|dimension"/>
+        <attr name="cb_drawableHeight" format="reference|dimension"/>
         <!-- 图标与文本之间的间距 -->
-        <attr name="drawableWidth" format="reference|dimension"/>
+        <attr name="cb_drawableWidth" format="reference|dimension"/>
         <!-- 用户触发模式 -->
-        <attr name="checkModel">
+        <attr name="cb_checkModel">
             <!-- 单选 -->
             <enum name="SIMPLE" value="4"/>
             <!-- 多选 -->
             <enum name="MULTI" value="5"/>
         </attr>
-        <attr name="strokeModel">
+        <attr name="cb_strokeModel">
             <!--默认和选中都显示边框-->
             <enum name="STROKE" value="1"/>
             <!--默认隐藏边框,选中显示边框-->
