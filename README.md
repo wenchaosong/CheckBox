@@ -23,7 +23,7 @@ repositories {
 - Step 2. 在你的app build.gradle 的 dependencies 中添加依赖
 ```
 dependencies {
-	compile 'com.github.wenchaosong:checkbox:1.0.1'
+	compile 'com.github.wenchaosong:checkbox:1.0.2'
 }
 ```
 
