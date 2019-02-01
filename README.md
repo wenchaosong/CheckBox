@@ -23,12 +23,16 @@ repositories {
 - Step 2. 在你的app build.gradle 的 dependencies 中添加依赖
 ```
 dependencies {
-	compile 'com.github.wenchaosong:checkbox:1.0.2'
+	implementation 'com.github.wenchaosong:CheckBox:1.0.3'
 }
 ```
+### 注意
 
-代码和效果说明：mainActivity  
-	CheckBoxGroupView checkBoxGroupView;
+* 多选时,要设置最大个数,否则无效
+
+### mainActivity
+
+    CheckBoxGroupView checkBoxGroupView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -182,7 +186,3 @@ dependencies {
             <enum name="GONE" value="3"/>
         </attr>
     </declare-styleable>
-
-### 注意
-
-* 多选时,要设置最大个数,否则无效
