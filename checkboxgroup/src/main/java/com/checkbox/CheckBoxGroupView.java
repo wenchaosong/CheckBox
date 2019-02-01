@@ -22,8 +22,6 @@ import java.util.List;
 
 public class CheckBoxGroupView extends View implements View.OnTouchListener {
 
-    private static final String TAG = CheckBoxGroupView.class.getSimpleName();
-
     private List<CheckText> checkTexts = new ArrayList<>(0);
     private SparseArray<CheckText> checkeds = new SparseArray<>(0);
 
@@ -261,7 +259,7 @@ public class CheckBoxGroupView extends View implements View.OnTouchListener {
         }
 
         if (listener != null && hasExchange)
-            listener.onCheckedChange(this, collectCheckedTexts());
+            listener.onCheckedChange(curIndex);
         return hasExchange;
     }
 
@@ -291,7 +289,8 @@ public class CheckBoxGroupView extends View implements View.OnTouchListener {
      */
     public synchronized int mesureHeightByWithLayout(int width) {
 
-        if (checkTexts == null || checkTexts.size() == 0) return 0;
+        if (checkTexts == null || checkTexts.size() == 0)
+            return 0;
 
         //计算所有文本中的最大高度
         int maxHeight = computerMaxTextHeight();
@@ -365,7 +364,8 @@ public class CheckBoxGroupView extends View implements View.OnTouchListener {
     @Override
     protected void onDraw(Canvas canvas) {
 
-        if (checkTexts == null || checkTexts.size() == 0) return;
+        if (checkTexts == null || checkTexts.size() == 0)
+            return;
 
         for (CheckText text : checkTexts) {
             drawTextBg(canvas, text);
@@ -606,8 +606,8 @@ public class CheckBoxGroupView extends View implements View.OnTouchListener {
         this.listener = listener;
     }
 
-    public static interface CheckTextCheckedChangeListener {
-        void onCheckedChange(CheckBoxGroupView view, List<CheckText> checkedTexts);
+    public interface CheckTextCheckedChangeListener {
+        void onCheckedChange(int position);
     }
 
     /**
@@ -654,6 +654,26 @@ public class CheckBoxGroupView extends View implements View.OnTouchListener {
         return checkeds;
     }
 
+    public void setCheckedStrokeColor(int color) {
+        checkedStrokeColor = color;
+        invalidate();
+    }
+
+    public void setUnCheckedStrokeColor(int color) {
+        unCheckedStrokeColor = color;
+        invalidate();
+    }
+
+    public void setCheckedTextColor(int color) {
+        checkedTextColor = color;
+        invalidate();
+    }
+
+    public void setUnCheckedTextColor(int color) {
+        unCheckedTextColor = color;
+        invalidate();
+    }
+
     public List<CheckText> getCheckTexts() {
         return checkTexts;
     }
@@ -663,7 +683,8 @@ public class CheckBoxGroupView extends View implements View.OnTouchListener {
     }
 
     public void setMaxCheckSize(int maxCheckSize) {
-        if (maxCheckSize > checkTexts.size()) maxCheckSize = checkTexts.size();
+        if (maxCheckSize > checkTexts.size())
+            maxCheckSize = checkTexts.size();
         this.maxCheckSize = maxCheckSize;
     }
 
