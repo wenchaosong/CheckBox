@@ -111,7 +111,7 @@ public class CheckBoxGroupView extends View implements View.OnTouchListener {
         initConfig(context, attrs);
     }
 
-    public void initConfig(Context context, AttributeSet attrs) {
+    private void initConfig(Context context, AttributeSet attrs) {
 
         TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.CheckBoxGroupView);
 
@@ -203,7 +203,7 @@ public class CheckBoxGroupView extends View implements View.OnTouchListener {
      * @param touchX 触摸的X坐标
      * @param touchY 触摸的Y坐标
      */
-    public synchronized boolean updateTextChecked(int touchX, int touchY, int action) {
+    private synchronized boolean updateTextChecked(int touchX, int touchY, int action) {
         boolean hasExchange = false;
         int curIndex = -1;
         for (int index = 0; index < checkTexts.size(); index++) {
@@ -263,7 +263,7 @@ public class CheckBoxGroupView extends View implements View.OnTouchListener {
         return hasExchange;
     }
 
-    public List<CheckText> collectCheckedTexts() {
+    private List<CheckText> collectCheckedTexts() {
         if (checkeds.size() == 0) {
             return null;
         }
@@ -275,7 +275,7 @@ public class CheckBoxGroupView extends View implements View.OnTouchListener {
         return list;
     }
 
-    public void cleanRadioChecked() {
+    private void cleanRadioChecked() {
 
         for (int index = 0; index < checkeds.size(); index++) {
             CheckText text = checkeds.get(checkeds.keyAt(index));
@@ -287,7 +287,7 @@ public class CheckBoxGroupView extends View implements View.OnTouchListener {
     /**
      * 重新计算每个文本的位置
      */
-    public synchronized int mesureHeightByWithLayout(int width) {
+    private synchronized int mesureHeightByWithLayout(int width) {
 
         if (checkTexts == null || checkTexts.size() == 0)
             return 0;
@@ -335,7 +335,7 @@ public class CheckBoxGroupView extends View implements View.OnTouchListener {
     }
 
     //计算文本的最大高度
-    public int computerMaxTextHeight() {
+    private int computerMaxTextHeight() {
         int maxheight = 0;
         for (CheckText text : checkTexts) {
             Rect rect = new Rect();
@@ -353,7 +353,7 @@ public class CheckBoxGroupView extends View implements View.OnTouchListener {
      * @param targetIndex   目标的位置
      * @param priorColIndex 上一次换行停留的位置index
      */
-    public int curTextColWidth(int targetIndex, int priorColIndex) {
+    private int curTextColWidth(int targetIndex, int priorColIndex) {
         int colWidth = 0;
         for (int index = priorColIndex; index <= targetIndex; index++) {
             colWidth += checkTexts.get(index).getWidth();
@@ -377,7 +377,7 @@ public class CheckBoxGroupView extends View implements View.OnTouchListener {
     /**
      * 绘制文本的背景
      */
-    public void drawTextBg(Canvas canvas, CheckText text) {
+    private void drawTextBg(Canvas canvas, CheckText text) {
 
         RectF strokeRectf = new RectF();
         final int halfWidth = text.getWidth() / 2;
@@ -423,7 +423,7 @@ public class CheckBoxGroupView extends View implements View.OnTouchListener {
     /**
      * 绘制文本
      */
-    public void drawText(Canvas canvas, CheckText text) {
+    private void drawText(Canvas canvas, CheckText text) {
         Rect targetRect = new Rect();
         final int halfWidth = text.getWidth() / 2;
         final int halfHeight = text.getHeight() / 2;
@@ -441,52 +441,12 @@ public class CheckBoxGroupView extends View implements View.OnTouchListener {
         canvas.drawText(text.getText(), targetRect.centerX(), baseline, textPaint);
     }
 
-    public void drawIcon(Canvas canvas, CheckText text) {
+    private void drawIcon(Canvas canvas, CheckText text) {
         if (checkedDrawable != null && unCheckedDrawable != null) {
             Drawable drawable = text.isChecked() ? checkedDrawable : unCheckedDrawable;
             Bitmap bitmap = drawabletoZoomBitmap(drawable, drawableWidth, drawableHeight);
             canvas.drawBitmap(bitmap, text.getCenterX() - text.getWidth() / 2 + textPaddingLeft, text.getCenterY() - drawableHeight / 2, null);
         }
-    }
-
-    public void updateCheckTexts(List<CheckText> checkTexts) {
-        if (checkTexts != null && checkTexts.size() > 0) {
-            this.checkTexts.clear();
-            this.checkTexts.addAll(checkTexts);
-            /**
-             * mesure()-->onmesure()-->layout()-->onlayout()-->dispatchDraw()-->Draw()-->onDraw();
-             * 重新计算视图的宽高和绘制
-             */
-            for (int index = 0; index < this.checkTexts.size(); index++) {
-                CheckText checkText = this.checkTexts.get(index);
-                if (checkText.isChecked)
-                    checkeds.put(index, checkText);
-            }
-            requestLayout();
-        }
-    }
-
-    public void updateTexts(List<String> tagTexts) {
-        if (tagTexts != null && tagTexts.size() > 0) {
-            List<CheckText> tags = new ArrayList<>();
-            for (String tagText : tagTexts) {
-                CheckText tag = new CheckText();
-                tag.setText(tagText);
-                tags.add(tag);
-            }
-            updateCheckTexts(tags);
-        }
-    }
-
-    /**
-     * dispatchDraw()-->Draw()-->onDraw();
-     * 重新绘制
-     */
-    public void requestInvalidate() {
-        if (Thread.currentThread().getId() == Looper.getMainLooper().getThread().getId())
-            invalidate();
-        else
-            postInvalidate();
     }
 
     public static class CheckText {
@@ -598,22 +558,10 @@ public class CheckBoxGroupView extends View implements View.OnTouchListener {
         }
     }
 
-    public CheckTextCheckedChangeListener getListener() {
-        return listener;
-    }
-
-    public void setListener(CheckTextCheckedChangeListener listener) {
-        this.listener = listener;
-    }
-
-    public interface CheckTextCheckedChangeListener {
-        void onCheckedChange(int position);
-    }
-
     /**
      * drawlable 缩放
      */
-    public static Bitmap drawabletoZoomBitmap(Drawable drawable, int w, int h) {
+    private static Bitmap drawabletoZoomBitmap(Drawable drawable, int w, int h) {
         // 取 drawable 的长宽
         int width = drawable.getIntrinsicWidth();
         int height = drawable.getIntrinsicHeight();
@@ -635,7 +583,7 @@ public class CheckBoxGroupView extends View implements View.OnTouchListener {
     /**
      * Drawable转换成Bitmap
      */
-    public static Bitmap drawabletoBitmap(Drawable drawable) {
+    private static Bitmap drawabletoBitmap(Drawable drawable) {
         // 取 drawable 的长宽
         int width = drawable.getIntrinsicWidth();
         int height = drawable.getIntrinsicHeight();
@@ -686,6 +634,61 @@ public class CheckBoxGroupView extends View implements View.OnTouchListener {
         if (maxCheckSize > checkTexts.size())
             maxCheckSize = checkTexts.size();
         this.maxCheckSize = maxCheckSize;
+    }
+
+    public void updateCheckTexts(List<CheckText> checkTexts) {
+        if (checkTexts != null && checkTexts.size() > 0) {
+            this.checkTexts.clear();
+            this.checkTexts.addAll(checkTexts);
+            /**
+             * mesure()-->onmesure()-->layout()-->onlayout()-->dispatchDraw()-->Draw()-->onDraw();
+             * 重新计算视图的宽高和绘制
+             */
+            for (int index = 0; index < this.checkTexts.size(); index++) {
+                CheckText checkText = this.checkTexts.get(index);
+                if (checkText.isChecked)
+                    checkeds.put(index, checkText);
+            }
+            requestLayout();
+        }
+    }
+
+    public void updateTexts(List<String> tagTexts) {
+        if (tagTexts != null && tagTexts.size() > 0) {
+            List<CheckText> tags = new ArrayList<>();
+            for (String tagText : tagTexts) {
+                CheckText tag = new CheckText();
+                tag.setText(tagText);
+                tags.add(tag);
+            }
+            updateCheckTexts(tags);
+        }
+    }
+
+    public void setChecked(int index) {
+        if (checkTexts != null && checkTexts.size() > index) {
+            CheckText checkText = checkTexts.get(index);
+            checkText.setChecked(true);
+        }
+    }
+
+    /**
+     * dispatchDraw()-->Draw()-->onDraw();
+     * 重新绘制
+     */
+    public void requestInvalidate() {
+        if (Thread.currentThread().getId() == Looper.getMainLooper().getThread().getId())
+            invalidate();
+        else
+            postInvalidate();
+    }
+
+    public void setListener(CheckTextCheckedChangeListener listener) {
+        this.listener = listener;
+    }
+
+    public interface CheckTextCheckedChangeListener {
+        void onCheckedChange(int position);
     }
 
 }
