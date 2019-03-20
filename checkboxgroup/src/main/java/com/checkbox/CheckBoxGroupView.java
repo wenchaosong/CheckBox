@@ -159,7 +159,6 @@ public class CheckBoxGroupView extends View implements View.OnTouchListener {
         textPaint.setAntiAlias(true);
         textPaint.setTextSize(textSize);
         textPaint.setColor(unCheckedTextColor);
-        textPaint.setStyle(Paint.Style.STROKE);
 
         strokePaint = new Paint();
         strokePaint.setAntiAlias(true);
