@@ -8,6 +8,7 @@
         <attr name="cb_textPaddingRight" format="dimension|reference"/>
         <attr name="cb_textPaddingButtom" format="dimension|reference"/>
         <attr name="cb_textGapWidth" format="dimension|reference"/>
+        <attr name="cb_groupWidth" format="dimension|reference"/>
         <attr name="cb_lineHeight" format="dimension|reference"/>
         <attr name="cb_checkedTextColor" format="color|reference"/>
         <attr name="cb_unCheckedTextColor" format="color|reference"/>

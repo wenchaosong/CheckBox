@@ -1,5 +1,6 @@
-# 一个类似于radioGroup和checkGroup 和流动标签tagClouds 一体管理的组件
-自定义继承View,可直接放置到listview等的子类视图中  
+# 流动标签组件
+在原项目[TextCheckGroupView](https://github.com/igeek-YZ/TextCheckGroupView) 基础上
+优化了点击事件和固定宽度
 
 主要特点：
 * 可用作显示给用户单选或者多选；  
@@ -9,8 +10,6 @@
 * 流动布局，每一行的显示个数可根据显示的数据和屏幕的宽度自适应换行  
 
 * 设置最大选中个数。在流动标签中很实用 
-
-`class CheckBoxGroupView extends View`  
 
 ## 使用
 
@@ -23,12 +22,13 @@ repositories {
 - Step 2. 在你的app build.gradle 的 dependencies 中添加依赖
 ```
 dependencies {
-	implementation 'com.github.wenchaosong:CheckBox:1.0.5'
+	implementation 'com.github.wenchaosong:CheckBox:1.0.6'
 }
 ```
-### 注意
+# 注意
 
 * 多选时,要设置最大个数,否则无效
+* 设置 drawable 时,要设置宽高
 
 ### mainActivity
 
@@ -148,6 +148,8 @@ dependencies {
         <attr name="cb_textPaddingButtom" format="dimension|reference"/>
         <!-- 文本之间的间隔距离 -->
         <attr name="cb_textGapWidth" format="dimension|reference"/>
+        <!-- 总宽度 -->
+        <attr name="cb_groupWidth" format="dimension|reference"/>
         <!-- 换行的行高间距 -->
         <attr name="cb_lineHeight" format="dimension|reference"/>
         <!-- 选中状态的颜色 -->

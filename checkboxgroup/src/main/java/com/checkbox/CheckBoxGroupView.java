@@ -13,6 +13,7 @@ import android.graphics.RectF;
 import android.graphics.drawable.Drawable;
 import android.os.Looper;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.util.SparseArray;
 import android.view.MotionEvent;
 import android.view.View;
@@ -37,6 +38,8 @@ public class CheckBoxGroupView extends View implements View.OnTouchListener {
     private int unCheckedStrokeColor;
     //文本之间的间隔距离
     private int textGapWidth;
+    //宽度
+    private int groupWidth;
     //换行的行高间距
     private int lineHeight;
     //边框宽度
@@ -141,6 +144,7 @@ public class CheckBoxGroupView extends View implements View.OnTouchListener {
         textSize = ta.getDimensionPixelSize(R.styleable.CheckBoxGroupView_cb_textSize, 14);
         tagRadius = ta.getDimensionPixelSize(R.styleable.CheckBoxGroupView_cb_tagRadius, 5);
         textGapWidth = ta.getDimensionPixelSize(R.styleable.CheckBoxGroupView_cb_textGapWidth, 0);
+        groupWidth = ta.getDimensionPixelSize(R.styleable.CheckBoxGroupView_cb_groupWidth, 0);
         lineHeight = ta.getDimensionPixelSize(R.styleable.CheckBoxGroupView_cb_lineHeight, 0);
         strokeWidth = ta.getDimensionPixelSize(R.styleable.CheckBoxGroupView_cb_strokeWidth, 0);
         drawableWidth = ta.getDimensionPixelOffset(R.styleable.CheckBoxGroupView_cb_drawableWidth, 0);
@@ -257,8 +261,12 @@ public class CheckBoxGroupView extends View implements View.OnTouchListener {
             requestInvalidate();
         }
 
-        if (listener != null && hasExchange)
-            listener.onCheckedChange(curIndex);
+        if (listener != null && hasExchange) {
+            if (curIndex < 0)
+                listener.onCheckedChange(curIndex, "");
+            else
+                listener.onCheckedChange(curIndex, checkTexts.get(curIndex).getText());
+        }
         return hasExchange;
     }
 
@@ -307,7 +315,11 @@ public class CheckBoxGroupView extends View implements View.OnTouchListener {
             textPaint.getTextBounds(text.getText(), 0, text.getText().length(), rect);
             text.setTextWidth(rect.width());
             text.setTextHeight(maxHeight);
-            text.setWidth(rect.width() + textPaddingLeft + textPaddingRight + drawableWidth + drawTextGapWidth);
+            if (groupWidth != 0) {
+                text.setWidth(groupWidth);
+            } else {
+                text.setWidth(rect.width() + textPaddingLeft + textPaddingRight + drawableWidth + drawTextGapWidth);
+            }
             if (drawableHeight < maxHeight + textPaddingButtom + textPaddingTop)
                 text.setHeight(maxHeight + textPaddingButtom + textPaddingTop);
             else
@@ -431,20 +443,28 @@ public class CheckBoxGroupView extends View implements View.OnTouchListener {
         targetRect.right = text.getCenterX() + halfWidth - textPaddingRight;
         targetRect.bottom = text.getCenterY() + halfHeight;
 
-
         textPaint.setColor(text.isChecked() ? checkedTextColor : unCheckedTextColor);
         Paint.FontMetricsInt fontMetrics = textPaint.getFontMetricsInt();
         int baseline = (targetRect.bottom + targetRect.top - fontMetrics.bottom - fontMetrics.top) / 2;
         // 实现水平居中，drawText对应改为传入targetRect.centerX(),也可以不设置，默认为left,自己计算
         textPaint.setTextAlign(Paint.Align.CENTER);
-        canvas.drawText(text.getText(), targetRect.centerX(), baseline, textPaint);
+        if (groupWidth != 0) {
+            canvas.drawText(text.getText(), text.getCenterX() + drawableWidth / 2 + drawTextGapWidth / 2, baseline, textPaint);
+        } else {
+            canvas.drawText(text.getText(), targetRect.centerX(), baseline, textPaint);
+        }
     }
 
     private void drawIcon(Canvas canvas, CheckText text) {
         if (checkedDrawable != null && unCheckedDrawable != null) {
             Drawable drawable = text.isChecked() ? checkedDrawable : unCheckedDrawable;
             Bitmap bitmap = drawabletoZoomBitmap(drawable, drawableWidth, drawableHeight);
-            canvas.drawBitmap(bitmap, text.getCenterX() - text.getWidth() / 2 + textPaddingLeft, text.getCenterY() - drawableHeight / 2, null);
+            if (groupWidth != 0) {
+                canvas.drawBitmap(bitmap, text.getCenterX() - drawableWidth - drawableWidth / 3 + textPaddingLeft - drawTextGapWidth / 2,
+                        text.getCenterY() - drawableHeight / 2, null);
+            } else {
+                canvas.drawBitmap(bitmap, text.getCenterX() - text.getWidth() / 2 + textPaddingLeft, text.getCenterY() - drawableHeight / 2, null);
+            }
         }
     }
 
@@ -687,7 +707,7 @@ public class CheckBoxGroupView extends View implements View.OnTouchListener {
     }
 
     public interface CheckTextCheckedChangeListener {
-        void onCheckedChange(int position);
+        void onCheckedChange(int position, String data);
     }
 
 }
