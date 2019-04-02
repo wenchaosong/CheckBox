@@ -13,7 +13,6 @@ import android.graphics.RectF;
 import android.graphics.drawable.Drawable;
 import android.os.Looper;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.util.SparseArray;
 import android.view.MotionEvent;
 import android.view.View;
@@ -468,6 +467,17 @@ public class CheckBoxGroupView extends View implements View.OnTouchListener {
         }
     }
 
+    /**
+     * dispatchDraw()-->Draw()-->onDraw();
+     * 重新绘制
+     */
+    private void requestInvalidate() {
+        if (Thread.currentThread().getId() == Looper.getMainLooper().getThread().getId())
+            invalidate();
+        else
+            postInvalidate();
+    }
+
     public static class CheckText {
         //位置
         private int index;
@@ -684,22 +694,9 @@ public class CheckBoxGroupView extends View implements View.OnTouchListener {
         }
     }
 
-    public void setChecked(int index) {
-        if (checkTexts != null && checkTexts.size() > index) {
-            CheckText checkText = checkTexts.get(index);
-            checkText.setChecked(true);
-        }
-    }
-
-    /**
-     * dispatchDraw()-->Draw()-->onDraw();
-     * 重新绘制
-     */
-    public void requestInvalidate() {
-        if (Thread.currentThread().getId() == Looper.getMainLooper().getThread().getId())
-            invalidate();
-        else
-            postInvalidate();
+    public void clear() {
+        cleanRadioChecked();
+        requestInvalidate();
     }
 
     public void setListener(CheckTextCheckedChangeListener listener) {
