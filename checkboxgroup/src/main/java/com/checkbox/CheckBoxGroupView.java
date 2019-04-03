@@ -660,8 +660,6 @@ public class CheckBoxGroupView extends View implements View.OnTouchListener {
     }
 
     public void setMaxCheckSize(int maxCheckSize) {
-        if (maxCheckSize > checkTexts.size())
-            maxCheckSize = checkTexts.size();
         this.maxCheckSize = maxCheckSize;
     }
 
@@ -669,10 +667,6 @@ public class CheckBoxGroupView extends View implements View.OnTouchListener {
         if (checkTexts != null && checkTexts.size() > 0) {
             this.checkTexts.clear();
             this.checkTexts.addAll(checkTexts);
-            /**
-             * mesure()-->onmesure()-->layout()-->onlayout()-->dispatchDraw()-->Draw()-->onDraw();
-             * 重新计算视图的宽高和绘制
-             */
             for (int index = 0; index < this.checkTexts.size(); index++) {
                 CheckText checkText = this.checkTexts.get(index);
                 if (checkText.isChecked)

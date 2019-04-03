@@ -3,17 +3,14 @@ apply plugin: 'com.github.dcendents.android-maven'
 
 group = 'com.github.wenchaosong'
 android {
-    compileSdkVersion 27
+    compileSdkVersion 28
     buildToolsVersion "28.0.2"
 
     defaultConfig {
-        minSdkVersion 11
-        targetSdkVersion 27
+        minSdkVersion 14
+        targetSdkVersion 28
         versionCode 1
         versionName "1.0"
-
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-
     }
     buildTypes {
         release {
@@ -24,5 +21,5 @@ android {
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
 }
