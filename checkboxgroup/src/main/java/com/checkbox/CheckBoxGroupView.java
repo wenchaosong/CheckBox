@@ -26,6 +26,7 @@ public class CheckBoxGroupView extends View implements View.OnTouchListener {
     private List<CheckText> checkTexts = new ArrayList<>(0);
     private SparseArray<CheckText> checkeds = new SparseArray<>(0);
     private int mNotSelect = -1;
+    private int enableColor;
     //文本字体大小
     private int textSize;
     //未选中状态文本的颜色(默认)
@@ -382,7 +383,7 @@ public class CheckBoxGroupView extends View implements View.OnTouchListener {
 
         for (int i = 0; i < checkTexts.size(); i++) {
             if (i == mNotSelect) {
-                drawTextBg(canvas, checkTexts.get(i), Color.GRAY);
+                drawTextBg(canvas, checkTexts.get(i), enableColor);
                 drawText(canvas, checkTexts.get(i));
                 drawIcon(canvas, checkTexts.get(i));
                 continue;
@@ -743,8 +744,10 @@ public class CheckBoxGroupView extends View implements View.OnTouchListener {
         }
     }
 
-    public void setSelectEnable(int position) {
+    public void setSelectEnable(int position, int color) {
         this.mNotSelect = position;
+        this.enableColor = color;
+        invalidate();
     }
 
     public void clear() {
