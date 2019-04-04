@@ -13,7 +13,6 @@ import android.graphics.RectF;
 import android.graphics.drawable.Drawable;
 import android.os.Looper;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.util.SparseArray;
 import android.view.MotionEvent;
 import android.view.View;
@@ -151,6 +150,7 @@ public class CheckBoxGroupView extends View implements View.OnTouchListener {
         drawableWidth = ta.getDimensionPixelOffset(R.styleable.CheckBoxGroupView_cb_drawableWidth, 0);
         drawableHeight = ta.getDimensionPixelOffset(R.styleable.CheckBoxGroupView_cb_drawableHeight, 0);
         drawTextGapWidth = ta.getDimensionPixelOffset(R.styleable.CheckBoxGroupView_cb_drawTextGapWidth, 0);
+        enableColor = ta.getColor(R.styleable.CheckBoxGroupView_cb_enableColor, Color.GRAY);
         checkedTextColor = ta.getColor(R.styleable.CheckBoxGroupView_cb_checkedTextColor, Color.GREEN);
         unCheckedTextColor = ta.getColor(R.styleable.CheckBoxGroupView_cb_unCheckedTextColor, Color.GRAY);
         checkedStrokeColor = ta.getColor(R.styleable.CheckBoxGroupView_cb_checkedStrokeColor, Color.RED);
@@ -453,37 +453,9 @@ public class CheckBoxGroupView extends View implements View.OnTouchListener {
         strokeRectf.right = text.getCenterX() + halfWidth;
         strokeRectf.bottom = text.getCenterY() + halfHeight;
 
-        //检查是否画边框
-        if (strokeModel == STROKE) {
-            strokePaint.setStyle(Paint.Style.STROKE);
-            strokePaint.setColor(color);
-            canvas.drawRoundRect(strokeRectf, tagRadius, tagRadius, strokePaint);
-        } else if (strokeModel == GONE_STROKE) {
-            if (text.isChecked()) {
-                strokePaint.setStyle(Paint.Style.STROKE);
-                strokePaint.setColor(color);
-                canvas.drawRoundRect(strokeRectf, tagRadius, tagRadius, strokePaint);
-            }
-        } else if (strokeModel == STROKE_FILL) {
-            if (!text.isChecked()) {
-                strokePaint.setStyle(Paint.Style.STROKE);
-                strokePaint.setColor(color);
-                canvas.drawRoundRect(strokeRectf, tagRadius, tagRadius, strokePaint);
-            } else {
-                strokePaint.setStyle(Paint.Style.FILL_AND_STROKE);
-                strokePaint.setColor(color);
-                canvas.drawRoundRect(strokeRectf, tagRadius, tagRadius, strokePaint);
-            }
-        } else if (strokeModel == FILL_FILL) {
-            strokePaint.setStyle(Paint.Style.FILL_AND_STROKE);
-            if (!text.isChecked()) {
-                strokePaint.setColor(color);
-                canvas.drawRoundRect(strokeRectf, tagRadius, tagRadius, strokePaint);
-            } else {
-                strokePaint.setColor(color);
-                canvas.drawRoundRect(strokeRectf, tagRadius, tagRadius, strokePaint);
-            }
-        }
+        strokePaint.setStyle(Paint.Style.FILL_AND_STROKE);
+        strokePaint.setColor(color);
+        canvas.drawRoundRect(strokeRectf, tagRadius, tagRadius, strokePaint);
     }
 
     /**
@@ -744,9 +716,8 @@ public class CheckBoxGroupView extends View implements View.OnTouchListener {
         }
     }
 
-    public void setSelectEnable(int position, int color) {
+    public void setSelectEnable(int position) {
         this.mNotSelect = position;
-        this.enableColor = color;
         invalidate();
     }
 
