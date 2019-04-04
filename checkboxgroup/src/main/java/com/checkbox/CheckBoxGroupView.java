@@ -13,6 +13,7 @@ import android.graphics.RectF;
 import android.graphics.drawable.Drawable;
 import android.os.Looper;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.util.SparseArray;
 import android.view.MotionEvent;
 import android.view.View;
@@ -24,7 +25,7 @@ public class CheckBoxGroupView extends View implements View.OnTouchListener {
 
     private List<CheckText> checkTexts = new ArrayList<>(0);
     private SparseArray<CheckText> checkeds = new SparseArray<>(0);
-
+    private int mNotSelect = -1;
     //文本字体大小
     private int textSize;
     //未选中状态文本的颜色(默认)
@@ -209,6 +210,8 @@ public class CheckBoxGroupView extends View implements View.OnTouchListener {
         boolean hasExchange = false;
         int curIndex = -1;
         for (int index = 0; index < checkTexts.size(); index++) {
+            if (index == mNotSelect)
+                continue;
             CheckText text = checkTexts.get(index);
             if (text.inRange(touchX, touchY)) {
                 switch (action) {
@@ -377,10 +380,16 @@ public class CheckBoxGroupView extends View implements View.OnTouchListener {
         if (checkTexts == null || checkTexts.size() == 0)
             return;
 
-        for (CheckText text : checkTexts) {
-            drawTextBg(canvas, text);
-            drawText(canvas, text);
-            drawIcon(canvas, text);
+        for (int i = 0; i < checkTexts.size(); i++) {
+            if (i == mNotSelect) {
+                drawTextBg(canvas, checkTexts.get(i), Color.GRAY);
+                drawText(canvas, checkTexts.get(i));
+                drawIcon(canvas, checkTexts.get(i));
+                continue;
+            }
+            drawTextBg(canvas, checkTexts.get(i));
+            drawText(canvas, checkTexts.get(i));
+            drawIcon(canvas, checkTexts.get(i));
         }
     }
 
@@ -425,6 +434,52 @@ public class CheckBoxGroupView extends View implements View.OnTouchListener {
                 canvas.drawRoundRect(strokeRectf, tagRadius, tagRadius, strokePaint);
             } else {
                 strokePaint.setColor(checkedStrokeColor);
+                canvas.drawRoundRect(strokeRectf, tagRadius, tagRadius, strokePaint);
+            }
+        }
+    }
+
+    /**
+     * 绘制文本的背景
+     */
+    private void drawTextBg(Canvas canvas, CheckText text, int color) {
+
+        RectF strokeRectf = new RectF();
+        final int halfWidth = text.getWidth() / 2;
+        final int halfHeight = text.getHeight() / 2;
+        strokeRectf.left = text.getCenterX() - halfWidth;
+        strokeRectf.top = text.getCenterY() - halfHeight;
+        strokeRectf.right = text.getCenterX() + halfWidth;
+        strokeRectf.bottom = text.getCenterY() + halfHeight;
+
+        //检查是否画边框
+        if (strokeModel == STROKE) {
+            strokePaint.setStyle(Paint.Style.STROKE);
+            strokePaint.setColor(color);
+            canvas.drawRoundRect(strokeRectf, tagRadius, tagRadius, strokePaint);
+        } else if (strokeModel == GONE_STROKE) {
+            if (text.isChecked()) {
+                strokePaint.setStyle(Paint.Style.STROKE);
+                strokePaint.setColor(color);
+                canvas.drawRoundRect(strokeRectf, tagRadius, tagRadius, strokePaint);
+            }
+        } else if (strokeModel == STROKE_FILL) {
+            if (!text.isChecked()) {
+                strokePaint.setStyle(Paint.Style.STROKE);
+                strokePaint.setColor(color);
+                canvas.drawRoundRect(strokeRectf, tagRadius, tagRadius, strokePaint);
+            } else {
+                strokePaint.setStyle(Paint.Style.FILL_AND_STROKE);
+                strokePaint.setColor(color);
+                canvas.drawRoundRect(strokeRectf, tagRadius, tagRadius, strokePaint);
+            }
+        } else if (strokeModel == FILL_FILL) {
+            strokePaint.setStyle(Paint.Style.FILL_AND_STROKE);
+            if (!text.isChecked()) {
+                strokePaint.setColor(color);
+                canvas.drawRoundRect(strokeRectf, tagRadius, tagRadius, strokePaint);
+            } else {
+                strokePaint.setColor(color);
                 canvas.drawRoundRect(strokeRectf, tagRadius, tagRadius, strokePaint);
             }
         }
@@ -686,6 +741,10 @@ public class CheckBoxGroupView extends View implements View.OnTouchListener {
             }
             updateCheckTexts(tags);
         }
+    }
+
+    public void setSelectEnable(int position) {
+        this.mNotSelect = position;
     }
 
     public void clear() {
