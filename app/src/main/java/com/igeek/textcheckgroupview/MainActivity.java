@@ -17,14 +17,15 @@ public class MainActivity extends AppCompatActivity {
 
         CheckBoxGroupView checkTextGroupView = (CheckBoxGroupView) findViewById(R.id.checkTextGroupView);
         checkTextGroupView.updateCheckTexts(initList());
+        checkTextGroupView.setSelectEnable(4);
     }
 
     public List<CheckBoxGroupView.CheckText> initList() {
 
         List<CheckBoxGroupView.CheckText> list = new ArrayList<>();
-        for (int index = 0; index < 10; index++) {
+        for (int index = 0; index < 5; index++) {
             CheckBoxGroupView.CheckText checkText = new CheckBoxGroupView.CheckText();
-            checkText.setText("中文" + index);
+            checkText.setText("中" + index);
             list.add(checkText);
         }
 

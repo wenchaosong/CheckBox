@@ -22,7 +22,7 @@ repositories {
 - Step 2. 在你的app build.gradle 的 dependencies 中添加依赖
 ```
 dependencies {
-	implementation 'com.github.wenchaosong:CheckBox:1.1.1'
+	implementation 'com.github.wenchaosong:CheckBox:1.1.2'
 }
 ```
 # 注意
@@ -64,10 +64,9 @@ dependencies {
         app:cb_checkedTextColor="#009EF2"
         app:cb_textPaddingLeft="16dp"
         app:cb_textPaddingRight="16dp"
-        app:cb_textPaddingButtom="12dp"
+        app:cb_textPaddingBottom="12dp"
         app:cb_textPaddingTop="12dp"
         app:cb_lineHeight="12dp"
-        app:cb_strokeModel="GONE"
         app:cb_checkModel="SIMPLE"
         app:cb_strokeWidth="1px"
         app:cb_textGapWidth="10dp"
@@ -87,10 +86,9 @@ dependencies {
         app:cb_checkedTextColor="#009EF2"
         app:cb_textPaddingLeft="16dp"
         app:cb_textPaddingRight="16dp"
-        app:cb_textPaddingButtom="12dp"
+        app:cb_textPaddingBottom="12dp"
         app:cb_textPaddingTop="12dp"
         app:cb_lineHeight="12dp"
-        app:cb_strokeModel="GONE_STROKE"
         app:cb_checkModel="SIMPLE"
         app:cb_strokeWidth="1px"
         app:cb_textGapWidth="10dp"
@@ -113,10 +111,9 @@ dependencies {
         app:cb_checkedTextColor="#009EF2"
         app:cb_textPaddingLeft="16dp"
         app:cb_textPaddingRight="16dp"
-        app:cb_textPaddingButtom="12dp"
+        app:cb_textPaddingBottom="12dp"
         app:cb_textPaddingTop="12dp"
         app:cb_lineHeight="12dp"
-        app:cb_strokeModel="GONE_STROKE"
         app:cb_checkModel="SIMPLE"
         app:cb_strokeWidth="1px"
         app:cb_textGapWidth="10dp"
@@ -145,11 +142,13 @@ dependencies {
         <!-- 文本距离边框的右填充间距 -->
         <attr name="cb_textPaddingRight" format="dimension|reference"/>
         <!-- 文本距离边框的底部填充间距 -->
-        <attr name="cb_textPaddingButtom" format="dimension|reference"/>
+        <attr name="cb_textPaddingBottom" format="dimension|reference"/>
         <!-- 文本之间的间隔距离 -->
         <attr name="cb_textGapWidth" format="dimension|reference"/>
         <!-- 总宽度 -->
         <attr name="cb_groupWidth" format="dimension|reference"/>
+        <!-- 总高度 -->
+        <attr name="cb_groupHeight" format="dimension|reference" />
         <!-- 换行的行高间距 -->
         <attr name="cb_lineHeight" format="dimension|reference"/>
         <!-- 选中状态的颜色 -->
@@ -160,6 +159,10 @@ dependencies {
         <attr name="cb_checkedStrokeColor" format="color|reference"/>
         <!-- 未选中边框颜色(默认) -->
         <attr name="cb_unCheckedStrokeColor" format="color|reference"/>
+        <!-- 选中填充颜色 -->
+        <attr name="cb_checkedFillColor" format="color|reference" />
+        <!-- 未选中填充颜色(默认) -->
+        <attr name="cb_unCheckedFillColor" format="color|reference" />
         <!-- 边框宽度 -->
         <attr name="cb_strokeWidth" format="dimension|reference"/>
         <!-- 选中的图标 -->
@@ -178,13 +181,5 @@ dependencies {
             <enum name="SIMPLE" value="4"/>
             <!-- 多选 -->
             <enum name="MULTI" value="5"/>
-        </attr>
-        <attr name="cb_strokeModel">
-            <!--默认和选中都显示边框-->
-            <enum name="STROKE" value="1"/>
-            <!--默认隐藏边框,选中显示边框-->
-            <enum name="GONE_STROKE" value="2"/>
-            <!--默认和选中都隐藏边框-->
-            <enum name="GONE" value="3"/>
         </attr>
     </declare-styleable>
