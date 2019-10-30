@@ -11,7 +11,7 @@
         <attr name="cb_groupWidth" format="dimension|reference" />
         <attr name="cb_groupHeight" format="dimension|reference" />
         <attr name="cb_lineHeight" format="dimension|reference" />
-        <attr name="cb_enableColor" format="color|reference" />
+        <attr name="cb_disableColor" format="color|reference" />
         <attr name="cb_checkedTextColor" format="color|reference" />
         <attr name="cb_unCheckedTextColor" format="color|reference" />
         <attr name="cb_checkedStrokeColor" format="color|reference" />
@@ -20,11 +20,13 @@
         <attr name="cb_unCheckedFillColor" format="color|reference" />
         <attr name="cb_strokeWidth" format="dimension|reference" />
         <attr name="cb_checkedDrawable" format="reference|color" />
+        <attr name="cb_checkedRes" format="reference" />
         <attr name="cb_unCheckedDrawable" format="reference|color" />
+        <attr name="cb_unCheckedRes" format="reference" />
         <attr name="cb_drawTextGapWidth" format="reference|dimension" />
         <attr name="cb_drawableHeight" format="dimension|reference" />
         <attr name="cb_drawableWidth" format="dimension|reference" />
-        <attr name="cb_tagRadius" format="reference|dimension" />
+        <attr name="cb_radius" format="reference|dimension" />
         <attr name="cb_checkModel">
             <enum name="SIMPLE" value="6" />
             <enum name="MULTI" value="7" />

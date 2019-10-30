@@ -3,7 +3,7 @@ package com.igeek.textcheckgroupview;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
-import com.checkbox.CheckBoxGroupView;
+import com.ms.checkbox.CheckBoxGroupView;
 
 import java.util.ArrayList;
 import java.util.List;

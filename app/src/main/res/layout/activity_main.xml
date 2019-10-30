@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <com.checkbox.CheckBoxGroupView
+    <com.ms.checkbox.CheckBoxGroupView
         android:id="@+id/checkTextGroupView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -19,7 +19,7 @@
         app:cb_groupWidth="60dp"
         app:cb_lineHeight="15dp"
         app:cb_strokeWidth="1dp"
-        app:cb_tagRadius="4dp"
+        app:cb_radius="4dp"
         app:cb_textGapWidth="15dp"
         app:cb_textSize="13sp"
         app:cb_unCheckedFillColor="#ffffff"

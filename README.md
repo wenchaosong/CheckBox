@@ -57,7 +57,7 @@ dependencies {
 ## 这里列出几种常用的模式,更多拼凑的模式你可以慢慢尝试下
 #### 无边框单选模式(多选修改*app:checkModel="MULTI"*) 
 
-	<com.checkbox.CheckBoxGroupView
+	<com.ms.checkbox.CheckBoxGroupView
         android:id="@+id/checkBoxGroupView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -78,7 +78,7 @@ dependencies {
 
 #### 选中边框单选模式(多选修改*app:checkModel="MULTI"*)  
 
-	<com.checkbox.CheckBoxGroupView
+	<com.ms.checkbox.CheckBoxGroupView
         android:id="@+id/checkBoxGroupView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -103,7 +103,7 @@ dependencies {
 
 #### 选中边框带图标单选模式(多选修改*app:checkModel="MULTI"*) 
 
-	<com.checkbox.CheckBoxGroupView
+	<com.ms.checkbox.CheckBoxGroupView
         android:id="@+id/checkBoxGroupView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -151,6 +151,8 @@ dependencies {
         <attr name="cb_groupHeight" format="dimension|reference" />
         <!-- 换行的行高间距 -->
         <attr name="cb_lineHeight" format="dimension|reference"/>
+        <!-- 换行的行高间距 -->
+        <attr name="cb_disableColor" format="color|reference" />
         <!-- 选中状态的颜色 -->
         <attr name="cb_checkedTextColor" format="color|reference"/>
         <!-- 未选中状态的颜色(默认) -->
@@ -167,14 +169,20 @@ dependencies {
         <attr name="cb_strokeWidth" format="dimension|reference"/>
         <!-- 选中的图标 -->
         <attr name="cb_checkedDrawable" format="reference|color"/>
+        <!-- 选中的图标 -->
+        <attr name="cb_checkedRes" format="reference" />
         <!-- 默认的图标 -->
         <attr name="cb_unCheckedDrawable" format="reference|color"/>
+        <!-- 默认的图标 -->
+        <attr name="cb_unCheckedRes" format="reference" />
         <!-- 图标的宽度 -->
         <attr name="cb_drawTextGapWidth" format="reference|dimension"/>
         <!-- 图标的高度 -->
         <attr name="cb_drawableHeight" format="reference|dimension"/>
         <!-- 图标与文本之间的间距 -->
         <attr name="cb_drawableWidth" format="reference|dimension"/>
+        <!-- 圆角角度 -->
+        <attr name="cb_tagRadius" format="reference|dimension" />
         <!-- 用户触发模式 -->
         <attr name="cb_checkModel">
             <!-- 单选 -->

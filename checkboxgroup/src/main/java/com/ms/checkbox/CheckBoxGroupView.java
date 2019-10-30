@@ -1,4 +1,4 @@
-package com.checkbox;
+package com.ms.checkbox;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -23,9 +23,9 @@ import java.util.List;
 public class CheckBoxGroupView extends View implements View.OnTouchListener {
 
     private List<CheckText> checkTexts = new ArrayList<>(0);
-    private SparseArray<CheckText> checkeds = new SparseArray<>(0);
+    private SparseArray<CheckText> checkedTexts = new SparseArray<>(0);
     private int mNotSelect = -1;
-    private int enableColor;
+    private int disableColor;
     //未选中状态文本的颜色(默认)
     private int checkedTextColor;
     //选中状态文本的颜色
@@ -53,7 +53,7 @@ public class CheckBoxGroupView extends View implements View.OnTouchListener {
     //图标与文本之间的间距
     private int drawTextGapWidth;
     //圆角半径
-    private int tagRadius;
+    private int radius;
     //最多选择的个数
     private int maxCheckSize = 1;
 
@@ -64,8 +64,10 @@ public class CheckBoxGroupView extends View implements View.OnTouchListener {
 
     //选中的图标
     private Drawable checkedDrawable;
+    private int checkedRes;
     //默认的图标
     private Drawable unCheckedDrawable;
+    private int unCheckedRes;
 
     //单选
     private static final int SIMPLE = 6;
@@ -83,7 +85,7 @@ public class CheckBoxGroupView extends View implements View.OnTouchListener {
     private int downCheckedIndex;
 
     private CheckTextCheckedChangeListener listener;
-
+    private Context mContext;
 
     public CheckBoxGroupView(Context context) {
         this(context, null);
@@ -95,6 +97,7 @@ public class CheckBoxGroupView extends View implements View.OnTouchListener {
 
     public CheckBoxGroupView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
+        mContext = context;
         initConfig(context, attrs);
     }
 
@@ -128,7 +131,7 @@ public class CheckBoxGroupView extends View implements View.OnTouchListener {
 
         //文本字体大小
         int textSize = ta.getDimensionPixelSize(R.styleable.CheckBoxGroupView_cb_textSize, 14);
-        tagRadius = ta.getDimensionPixelSize(R.styleable.CheckBoxGroupView_cb_tagRadius, 5);
+        radius = ta.getDimensionPixelSize(R.styleable.CheckBoxGroupView_cb_radius, 5);
         textGapWidth = ta.getDimensionPixelSize(R.styleable.CheckBoxGroupView_cb_textGapWidth, 0);
         groupWidth = ta.getDimensionPixelSize(R.styleable.CheckBoxGroupView_cb_groupWidth, 0);
         groupHeight = ta.getDimensionPixelSize(R.styleable.CheckBoxGroupView_cb_groupHeight, 0);
@@ -138,7 +141,7 @@ public class CheckBoxGroupView extends View implements View.OnTouchListener {
         drawableWidth = ta.getDimensionPixelOffset(R.styleable.CheckBoxGroupView_cb_drawableWidth, 0);
         drawableHeight = ta.getDimensionPixelOffset(R.styleable.CheckBoxGroupView_cb_drawableHeight, 0);
         drawTextGapWidth = ta.getDimensionPixelOffset(R.styleable.CheckBoxGroupView_cb_drawTextGapWidth, 0);
-        enableColor = ta.getColor(R.styleable.CheckBoxGroupView_cb_enableColor, Color.GRAY);
+        disableColor = ta.getColor(R.styleable.CheckBoxGroupView_cb_disableColor, Color.GRAY);
         checkedTextColor = ta.getColor(R.styleable.CheckBoxGroupView_cb_checkedTextColor, Color.GREEN);
         unCheckedTextColor = ta.getColor(R.styleable.CheckBoxGroupView_cb_unCheckedTextColor, Color.GRAY);
         checkedStrokeColor = ta.getColor(R.styleable.CheckBoxGroupView_cb_checkedStrokeColor, Color.RED);
@@ -147,7 +150,9 @@ public class CheckBoxGroupView extends View implements View.OnTouchListener {
         unCheckedFillColor = ta.getColor(R.styleable.CheckBoxGroupView_cb_unCheckedFillColor, Color.GRAY);
         checkModel = ta.getInt(R.styleable.CheckBoxGroupView_cb_checkModel, SIMPLE);
         checkedDrawable = ta.getDrawable(R.styleable.CheckBoxGroupView_cb_checkedDrawable);
+        checkedRes = ta.getResourceId(R.styleable.CheckBoxGroupView_cb_checkedRes, 0);
         unCheckedDrawable = ta.getDrawable(R.styleable.CheckBoxGroupView_cb_unCheckedDrawable);
+        unCheckedRes = ta.getResourceId(R.styleable.CheckBoxGroupView_cb_unCheckedRes, 0);
 
         textPaint = new Paint();
         textPaint.setAntiAlias(true);
@@ -176,22 +181,22 @@ public class CheckBoxGroupView extends View implements View.OnTouchListener {
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
         int width = MeasureSpec.getSize(widthMeasureSpec);
-        heightMeasureSpec = MeasureSpec.makeMeasureSpec(mesureHeightByWithLayout(width), MeasureSpec.AT_MOST);
+        heightMeasureSpec = MeasureSpec.makeMeasureSpec(measureHeightByWithLayout(width), MeasureSpec.AT_MOST);
         setMeasuredDimension(widthMeasureSpec, heightMeasureSpec);
     }
 
     @Override
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
         super.onSizeChanged(w, h, oldw, oldh);
-        mesureHeightByWithLayout(w);
+        measureHeightByWithLayout(w);
     }
 
     @Override
     public boolean onTouch(View v, MotionEvent event) {
-        int lasterDownX = (int) event.getX();
-        int lasterDownY = (int) event.getY();
+        int lastDownX = (int) event.getX();
+        int lastDownY = (int) event.getY();
         if (isEnabled())
-            updateTextChecked(lasterDownX, lasterDownY, event.getAction());
+            updateTextChecked(lastDownX, lastDownY, event.getAction());
         return checkTexts.size() > 0 && isEnabled();
     }
 
@@ -211,11 +216,11 @@ public class CheckBoxGroupView extends View implements View.OnTouchListener {
             if (text.inRange(touchX, touchY)) {
                 switch (action) {
                     case MotionEvent.ACTION_DOWN:
-                        if (checkeds.get(index) == null) {
+                        if (checkedTexts.get(index) == null) {
                             text.setChecked(true);
                             if (checkModel == SIMPLE)
                                 cleanRadioChecked();
-                            checkeds.put(index, text);
+                            checkedTexts.put(index, text);
                             hasExchange = true;
                             curIndex = index;
                             downCheckedIndex = -1;
@@ -225,11 +230,11 @@ public class CheckBoxGroupView extends View implements View.OnTouchListener {
                         }
                         break;
                     case MotionEvent.ACTION_MOVE:
-                        if (checkeds.get(index) == null) {
+                        if (checkedTexts.get(index) == null) {
                             text.setChecked(true);
                             if (checkModel == SIMPLE)
                                 cleanRadioChecked();
-                            checkeds.put(index, text);
+                            checkedTexts.put(index, text);
                             curIndex = index;
                             hasExchange = true;
                         } else {
@@ -238,9 +243,9 @@ public class CheckBoxGroupView extends View implements View.OnTouchListener {
                         break;
                     case MotionEvent.ACTION_UP:
                         if (downCheckedIndex == index) {
-                            if (checkeds.get(index) != null) {
+                            if (checkedTexts.get(index) != null) {
                                 text.setChecked(false);
-                                checkeds.delete(index);
+                                checkedTexts.delete(index);
                                 hasExchange = true;
                             }
                         }
@@ -249,9 +254,9 @@ public class CheckBoxGroupView extends View implements View.OnTouchListener {
             }
         }
 
-        if (checkeds.size() > maxCheckSize && curIndex != -1) {
+        if (checkedTexts.size() > maxCheckSize && curIndex != -1) {
             checkTexts.get(curIndex).setChecked(false);
-            checkeds.delete(curIndex);
+            checkedTexts.delete(curIndex);
         }
 
         if (hasExchange) {
@@ -268,19 +273,19 @@ public class CheckBoxGroupView extends View implements View.OnTouchListener {
 
     private void cleanRadioChecked() {
 
-        for (int index = 0; index < checkeds.size(); index++) {
-            CheckText text = checkeds.get(checkeds.keyAt(index));
+        for (int index = 0; index < checkedTexts.size(); index++) {
+            CheckText text = checkedTexts.get(checkedTexts.keyAt(index));
             text.setChecked(false);
         }
-        checkeds.clear();
+        checkedTexts.clear();
     }
 
     /**
      * 重新计算每个文本的位置
      */
-    private synchronized int mesureHeightByWithLayout(int width) {
+    private synchronized int measureHeightByWithLayout(int width) {
 
-        if (checkTexts == null || checkTexts.size() == 0)
+        if (checkTexts == null || checkTexts.size() <= 0)
             return 0;
 
         //计算所有文本中的最大高度
@@ -324,7 +329,7 @@ public class CheckBoxGroupView extends View implements View.OnTouchListener {
             text.setCenterY(getPaddingTop() + priorRawXPosion + text.getHeight() / 2 + curRow * lineHeight);
         }
 
-        if (checkTexts.size() == 0) {
+        if (checkTexts.size() <= 0) {
             return 0;
         } else {
             CheckText checkText = checkTexts.get(checkTexts.size() - 1);
@@ -362,12 +367,12 @@ public class CheckBoxGroupView extends View implements View.OnTouchListener {
     @Override
     protected void onDraw(Canvas canvas) {
 
-        if (checkTexts == null || checkTexts.size() == 0)
+        if (checkTexts == null || checkTexts.size() <= 0)
             return;
 
         for (int i = 0; i < checkTexts.size(); i++) {
             if (i == mNotSelect) {
-                drawBg(canvas, checkTexts.get(i), enableColor);
+                drawBg(canvas, checkTexts.get(i), disableColor);
                 drawStroke(canvas, checkTexts.get(i));
                 drawText(canvas, checkTexts.get(i));
                 drawIcon(canvas, checkTexts.get(i));
@@ -385,20 +390,20 @@ public class CheckBoxGroupView extends View implements View.OnTouchListener {
      */
     private void drawBg(Canvas canvas, CheckText text) {
 
-        RectF fillRectf = new RectF();
+        RectF fillRectF = new RectF();
         final int halfWidth = text.getWidth() / 2;
         final int halfHeight = text.getHeight() / 2;
-        fillRectf.left = text.getCenterX() - halfWidth;
-        fillRectf.top = text.getCenterY() - halfHeight;
-        fillRectf.right = text.getCenterX() + halfWidth;
-        fillRectf.bottom = text.getCenterY() + halfHeight;
+        fillRectF.left = text.getCenterX() - halfWidth;
+        fillRectF.top = text.getCenterY() - halfHeight;
+        fillRectF.right = text.getCenterX() + halfWidth;
+        fillRectF.bottom = text.getCenterY() + halfHeight;
 
         if (!text.isChecked()) {
             fillPaint.setColor(unCheckedFillColor);
-            canvas.drawRoundRect(fillRectf, tagRadius, tagRadius, fillPaint);
+            canvas.drawRoundRect(fillRectF, radius, radius, fillPaint);
         } else {
             fillPaint.setColor(checkedFillColor);
-            canvas.drawRoundRect(fillRectf, tagRadius, tagRadius, fillPaint);
+            canvas.drawRoundRect(fillRectF, radius, radius, fillPaint);
         }
     }
 
@@ -407,16 +412,16 @@ public class CheckBoxGroupView extends View implements View.OnTouchListener {
      */
     private void drawBg(Canvas canvas, CheckText text, int color) {
 
-        RectF fillRectf = new RectF();
+        RectF fillRectF = new RectF();
         final int halfWidth = text.getWidth() / 2;
         final int halfHeight = text.getHeight() / 2;
-        fillRectf.left = text.getCenterX() - halfWidth;
-        fillRectf.top = text.getCenterY() - halfHeight;
-        fillRectf.right = text.getCenterX() + halfWidth;
-        fillRectf.bottom = text.getCenterY() + halfHeight;
+        fillRectF.left = text.getCenterX() - halfWidth;
+        fillRectF.top = text.getCenterY() - halfHeight;
+        fillRectF.right = text.getCenterX() + halfWidth;
+        fillRectF.bottom = text.getCenterY() + halfHeight;
 
         fillPaint.setColor(color);
-        canvas.drawRoundRect(fillRectf, tagRadius, tagRadius, fillPaint);
+        canvas.drawRoundRect(fillRectF, radius, radius, fillPaint);
     }
 
     /**
@@ -424,20 +429,20 @@ public class CheckBoxGroupView extends View implements View.OnTouchListener {
      */
     private void drawStroke(Canvas canvas, CheckText text) {
 
-        RectF strokeRectf = new RectF();
+        RectF strokeRectF = new RectF();
         final int halfWidth = text.getWidth() / 2;
         final int halfHeight = text.getHeight() / 2;
-        strokeRectf.left = text.getCenterX() - halfWidth;
-        strokeRectf.top = text.getCenterY() - halfHeight;
-        strokeRectf.right = text.getCenterX() + halfWidth;
-        strokeRectf.bottom = text.getCenterY() + halfHeight;
+        strokeRectF.left = text.getCenterX() - halfWidth;
+        strokeRectF.top = text.getCenterY() - halfHeight;
+        strokeRectF.right = text.getCenterX() + halfWidth;
+        strokeRectF.bottom = text.getCenterY() + halfHeight;
 
         if (!text.isChecked()) {
             strokePaint.setColor(unCheckedStrokeColor);
-            canvas.drawRoundRect(strokeRectf, tagRadius, tagRadius, strokePaint);
+            canvas.drawRoundRect(strokeRectF, radius, radius, strokePaint);
         } else {
             strokePaint.setColor(checkedStrokeColor);
-            canvas.drawRoundRect(strokeRectf, tagRadius, tagRadius, strokePaint);
+            canvas.drawRoundRect(strokeRectF, radius, radius, strokePaint);
         }
     }
 
@@ -466,14 +471,27 @@ public class CheckBoxGroupView extends View implements View.OnTouchListener {
     }
 
     private void drawIcon(Canvas canvas, CheckText text) {
+        Bitmap bitmap;
         if (checkedDrawable != null && unCheckedDrawable != null) {
             Drawable drawable = text.isChecked() ? checkedDrawable : unCheckedDrawable;
-            Bitmap bitmap = drawabletoZoomBitmap(drawable, drawableWidth, drawableHeight);
+            bitmap = drawableToZoomBitmap(drawable, drawableWidth, drawableHeight);
             if (groupWidth != 0) {
                 canvas.drawBitmap(bitmap, text.getCenterX() - drawableWidth - drawableWidth / 3 + textPaddingLeft - drawTextGapWidth / 2,
                         text.getCenterY() - drawableHeight / 2, null);
             } else {
                 canvas.drawBitmap(bitmap, text.getCenterX() - text.getWidth() / 2 + textPaddingLeft, text.getCenterY() - drawableHeight / 2, null);
+            }
+        } else {
+            if (checkedRes != 0 && unCheckedRes != 0) {
+                int res = text.isChecked() ? checkedRes : unCheckedRes;
+                Drawable drawable = mContext.getResources().getDrawable(res);
+                bitmap = drawableToZoomBitmap(drawable, drawableWidth, drawableHeight);
+                if (groupWidth != 0) {
+                    canvas.drawBitmap(bitmap, text.getCenterX() - drawableWidth - drawableWidth / 3 + textPaddingLeft - drawTextGapWidth / 2,
+                            text.getCenterY() - drawableHeight / 2, null);
+                } else {
+                    canvas.drawBitmap(bitmap, text.getCenterX() - text.getWidth() / 2 + textPaddingLeft, text.getCenterY() - drawableHeight / 2, null);
+                }
             }
         }
     }
@@ -599,14 +617,14 @@ public class CheckBoxGroupView extends View implements View.OnTouchListener {
     }
 
     /**
-     * drawlable 缩放
+     * drawable 缩放
      */
-    private static Bitmap drawabletoZoomBitmap(Drawable drawable, int w, int h) {
+    private static Bitmap drawableToZoomBitmap(Drawable drawable, int w, int h) {
         // 取 drawable 的长宽
         int width = drawable.getIntrinsicWidth();
         int height = drawable.getIntrinsicHeight();
         // drawable转换成bitmap
-        Bitmap oldbmp = drawabletoBitmap(drawable);
+        Bitmap oldbmp = drawableToBitmap(drawable);
         // 创建操作图片用的Matrix对象
         Matrix matrix = new Matrix();
         // 计算缩放比例
@@ -621,7 +639,7 @@ public class CheckBoxGroupView extends View implements View.OnTouchListener {
     /**
      * Drawable转换成Bitmap
      */
-    private static Bitmap drawabletoBitmap(Drawable drawable) {
+    private static Bitmap drawableToBitmap(Drawable drawable) {
         // 取 drawable 的长宽
         int width = drawable.getIntrinsicWidth();
         int height = drawable.getIntrinsicHeight();
@@ -636,8 +654,8 @@ public class CheckBoxGroupView extends View implements View.OnTouchListener {
         return bitmap;
     }
 
-    public SparseArray<CheckText> getCheckeds() {
-        return checkeds;
+    public SparseArray<CheckText> getCheckedTexts() {
+        return checkedTexts;
     }
 
     public void setCheckedStrokeColor(int color) {
@@ -679,7 +697,7 @@ public class CheckBoxGroupView extends View implements View.OnTouchListener {
             for (int index = 0; index < this.checkTexts.size(); index++) {
                 CheckText checkText = this.checkTexts.get(index);
                 if (checkText.isChecked)
-                    checkeds.put(index, checkText);
+                    checkedTexts.put(index, checkText);
             }
             requestLayout();
         }
@@ -699,6 +717,16 @@ public class CheckBoxGroupView extends View implements View.OnTouchListener {
 
     public void setSelectEnable(int position) {
         this.mNotSelect = position;
+        invalidate();
+    }
+
+    public void setSelectIndex(int position) {
+        getCheckTexts().get(position).setChecked(true);
+        for (int index = 0; index < this.checkTexts.size(); index++) {
+            CheckText checkText = this.checkTexts.get(index);
+            if (checkText.isChecked)
+                checkedTexts.put(index, checkText);
+        }
         invalidate();
     }
 
