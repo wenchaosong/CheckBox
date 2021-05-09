@@ -5,25 +5,35 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+    <GridView
+        android:id="@+id/gv"
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        android:layout_marginTop="10dp"
+        android:numColumns="3" />
+
     <com.ms.checkbox.CheckBoxGroupView
-        android:id="@+id/checkTextGroupView"
+        android:id="@+id/checkBoxGroupView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="50dp"
-        android:layout_marginTop="100dp"
-        app:cb_checkModel="SIMPLE"
-        app:cb_checkedFillColor="#2588E9"
-        app:cb_checkedStrokeColor="#2588E9"
-        app:cb_checkedTextColor="#ffffff"
-        app:cb_groupHeight="32dp"
-        app:cb_groupWidth="60dp"
-        app:cb_lineHeight="15dp"
+        android:layout_marginTop="50dp"
+        app:cb_checkModel="MULTI"
+        app:cb_checkedFillColor="#fff"
+        app:cb_checkedStrokeColor="#e7e7e7"
+        app:cb_checkedTextColor="#f4f4f4"
+        app:cb_lineHeight="10dp"
+        app:cb_radius="2dp"
+        app:cb_repeatCheck="false"
         app:cb_strokeWidth="1dp"
-        app:cb_radius="4dp"
-        app:cb_textGapWidth="15dp"
-        app:cb_textSize="13sp"
-        app:cb_unCheckedFillColor="#ffffff"
-        app:cb_unCheckedStrokeColor="#999999"
-        app:cb_unCheckedTextColor="#333333" />
+        app:cb_textBold="true"
+        app:cb_textGapWidth="25dp"
+        app:cb_textPaddingBottom="9dp"
+        app:cb_textPaddingLeft="17dp"
+        app:cb_textPaddingRight="17dp"
+        app:cb_textPaddingTop="9dp"
+        app:cb_textSize="17sp"
+        app:cb_unCheckedFillColor="#e7e7e7"
+        app:cb_unCheckedStrokeColor="#e7e7e7"
+        app:cb_unCheckedTextColor="#333" />
 
 </LinearLayout>

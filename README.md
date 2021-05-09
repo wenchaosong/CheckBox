@@ -4,12 +4,13 @@
 
 主要特点：
 * 可用作显示给用户单选或者多选；  
+* 可自定义显示的模式：无边框，有边框，有图标和隐藏图标几种组合模式
+* 流动布局，每一行的显示个数可根据显示的数据和屏幕的宽度自适应换行
+* 设置最大选中个数。在流动标签中很实用
 
-* 可自定义显示的模式：无边框，有边框，有图标和隐藏图标几种组合模式  
+# 注意
 
-* 流动布局，每一行的显示个数可根据显示的数据和屏幕的宽度自适应换行  
-
-* 设置最大选中个数。在流动标签中很实用 
+* 设置 drawable 时,要设置宽高
 
 ## 使用
 
@@ -19,117 +20,37 @@ repositories {
     maven { url "https://jitpack.io" }
 }
 ```
+
 - Step 2. 在你的app build.gradle 的 dependencies 中添加依赖
 ```
 dependencies {
-	implementation 'com.github.wenchaosong:CheckBox:1.1.3'
+	implementation 'com.github.wenchaosong:CheckBox:1.1.4'
 }
 ```
-# 注意
-
-* 多选时,要设置最大个数,否则无效
-* 设置 drawable 时,要设置宽高
 
 ### mainActivity
-
+```
     CheckBoxGroupView checkBoxGroupView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        checkBoxGroupView= (CheckBoxGroupView) findViewById(R.id.checkBoxGroupView);
-        checkBoxGroupView.updateCheckTexts(initList());
+        checkBoxGroupView = (CheckBoxGroupView) findViewById(R.id.checkBoxGroupView);
+        checkBoxGroupView.setNewData(initList());
     }
 
-    public List<CheckBoxGroupView.CheckText> initList(){
-
-        List<CheckBoxGroupView.CheckText> list=new ArrayList<CheckBoxGroupView.CheckText>();
-        for(int index=0;index<10;index++){
-            CheckBoxGroupView.CheckText checkText=new CheckBoxGroupView.CheckText();
-            checkText.setText("中文"+index);
-            list.add(checkText);
+    private List<String> initList() {
+        List<String> list = new ArrayList<>();
+        for (int index = 0; index < 12; index++) {
+            list.add("中" + index);
         }
-
         return list;
     }
-  
-## 这里列出几种常用的模式,更多拼凑的模式你可以慢慢尝试下
-#### 无边框单选模式(多选修改*app:checkModel="MULTI"*) 
-
-	<com.ms.checkbox.CheckBoxGroupView
-        android:id="@+id/checkBoxGroupView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:cb_checkedTextColor="#009EF2"
-        app:cb_textPaddingLeft="16dp"
-        app:cb_textPaddingRight="16dp"
-        app:cb_textPaddingBottom="12dp"
-        app:cb_textPaddingTop="12dp"
-        app:cb_lineHeight="12dp"
-        app:cb_checkModel="SIMPLE"
-        app:cb_strokeWidth="1px"
-        app:cb_textGapWidth="10dp"
-        app:cb_textSize="16sp"
-        app:cb_unCheckedTextColor="@color/black_overlay" />
-
-
-![image](/gifs/simple_gone.gif )  
-
-#### 选中边框单选模式(多选修改*app:checkModel="MULTI"*)  
-
-	<com.ms.checkbox.CheckBoxGroupView
-        android:id="@+id/checkBoxGroupView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:cb_checkedStrokeColor="@color/colorPrimary"
-        app:cb_checkedTextColor="#009EF2"
-        app:cb_textPaddingLeft="16dp"
-        app:cb_textPaddingRight="16dp"
-        app:cb_textPaddingBottom="12dp"
-        app:cb_textPaddingTop="12dp"
-        app:cb_lineHeight="12dp"
-        app:cb_checkModel="SIMPLE"
-        app:cb_strokeWidth="1px"
-        app:cb_textGapWidth="10dp"
-        app:cb_textSize="16sp"
-        app:cb_unCheckedStrokeColor="@color/gray_efeff4"
-        app:cb_unCheckedTextColor="@color/black_overlay" />
-
-![image](/gifs/simple_gone_Stroke.gif )  
-
-#### 选中边框多选模式
-![image](/gifs/mulit_gone_Stroke.gif )
-
-#### 选中边框带图标单选模式(多选修改*app:checkModel="MULTI"*) 
-
-	<com.ms.checkbox.CheckBoxGroupView
-        android:id="@+id/checkBoxGroupView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:cb_checkedStrokeColor="@color/colorPrimary"
-        app:cb_checkedTextColor="#009EF2"
-        app:cb_textPaddingLeft="16dp"
-        app:cb_textPaddingRight="16dp"
-        app:cb_textPaddingBottom="12dp"
-        app:cb_textPaddingTop="12dp"
-        app:cb_lineHeight="12dp"
-        app:cb_checkModel="SIMPLE"
-        app:cb_strokeWidth="1px"
-        app:cb_textGapWidth="10dp"
-        app:cb_textSize="16sp"
-        app:cb_drawTextGapWidth="8dp"
-        app:cb_drawableWidth="20dp"
-        app:cb_drawableHeight="20dp"
-        app:cb_unCheckedDrawable="@mipmap/ic_radio_btn_unchecked_black_24dp"
-        app:cb_checkedDrawable="@mipmap/ic_radio_btn_checked_black_24dp"
-        app:cb_unCheckedStrokeColor="@color/gray_efeff4"
-        app:cb_unCheckedTextColor="@color/black_overlay" />
-
-
-![image](/gifs/simple_icon_gone_Stroke.gif )  
+```
 
 #### 属性说明
+```
 	<declare-styleable name="CheckBoxGroupView">
         <!--文本字体大小-->
         <attr name="cb_textSize" format="dimension|reference"/>
@@ -183,11 +104,18 @@ dependencies {
         <attr name="cb_drawableWidth" format="reference|dimension"/>
         <!-- 圆角角度 -->
         <attr name="cb_tagRadius" format="reference|dimension" />
-        <!-- 用户触发模式 -->
+        <!-- 是否加粗 -->
+        <attr name="cb_textBold" format="boolean" />
+        <!-- 是否重复选择 -->
+        <attr name="cb_repeatCheck" format="boolean" />
+        <!-- 多选最大个数 -->
+        <attr name="cb_maxCheckedNum" format="integer" />
+        <!-- 选择模式 -->
         <attr name="cb_checkModel">
             <!-- 单选 -->
-            <enum name="SIMPLE" value="4"/>
+            <enum name="SIMPLE" value="1" />
             <!-- 多选 -->
-            <enum name="MULTI" value="5"/>
+            <enum name="MULTI" value="2" />
         </attr>
     </declare-styleable>
+```

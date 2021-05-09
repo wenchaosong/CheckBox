@@ -27,9 +27,12 @@
         <attr name="cb_drawableHeight" format="dimension|reference" />
         <attr name="cb_drawableWidth" format="dimension|reference" />
         <attr name="cb_radius" format="reference|dimension" />
+        <attr name="cb_textBold" format="boolean" />
+        <attr name="cb_repeatCheck" format="boolean" />
+        <attr name="cb_maxCheckedNum" format="integer" />
         <attr name="cb_checkModel">
-            <enum name="SIMPLE" value="6" />
-            <enum name="MULTI" value="7" />
+            <enum name="SIMPLE" value="1" />
+            <enum name="MULTI" value="2" />
         </attr>
     </declare-styleable>
 
