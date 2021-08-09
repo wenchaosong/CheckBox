@@ -25,6 +25,7 @@ repositories {
 ```
 dependencies {
 	implementation 'com.github.wenchaosong:CheckBox:1.1.4'
+	implementation 'com.github.wenchaosong:CheckBox:1.2.0' // androidx
 }
 ```
 

@@ -1,9 +1,10 @@
 package com.demo;
 
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.widget.GridView;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.ms.checkbox.CheckBoxGroupView;
 
@@ -21,7 +22,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         GridView gridView = findViewById(R.id.gv);
-        final CheckBoxGroupView checkBoxGroupView = (CheckBoxGroupView) findViewById(R.id.checkBoxGroupView);
+        final CheckBoxGroupView checkBoxGroupView = findViewById(R.id.checkBoxGroupView);
         checkBoxGroupView.setNewData(initList());
 
         mTestAdapter = new TestAdapter(this, mData, checkBoxGroupView);
